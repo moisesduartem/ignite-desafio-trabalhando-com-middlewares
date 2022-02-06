@@ -26,7 +26,16 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+
+  if (!user.pro && user.todos.length >= 10) {
+    return response.status(403).json({
+      error: 'Non-pro users can only add up to 10 todos'
+    });
+  }
+
+  next();
+
 }
 
 function checksTodoExists(request, response, next) {
